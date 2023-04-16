@@ -169,6 +169,7 @@ export default class CreatingFormView {
   getTemplate () {
     return createCreatingFormTemplate;
   }
+
   getElement() {
     if (!this.element){
       this.element = createElement(this.getTemplate());

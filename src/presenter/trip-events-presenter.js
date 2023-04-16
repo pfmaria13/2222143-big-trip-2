@@ -15,11 +15,11 @@ export default class TripEventsPresenter {
     render(new SortingView(), this.tripContainer);
     render(this.eventsList, this.tripContainer);
     render(new EditingFormView(), this.eventsList.getElement());
-    
+
     for (let i = 0; i < 5; i++){
       render(new RoutePointView(), this.eventsList.getElement());
     }
     render(new CreatingFormView(), this.eventsList.getElement());
-    
+
   }
 }
