@@ -11,3 +11,4 @@ import FiltersView from './view/filters-view.js';
  render(new SiteMenuView(), siteHeaderElement.querySelector('.trip-controls__navigation'));
 
  tripPresenter.init(siteMainElement.querySelector('.trip-events'));
+ 
