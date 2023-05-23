@@ -16,7 +16,7 @@ export default class PointsModel {
   getDestinations() {
     return this.destinations;
   }
-  
+
   getOffers() {
     return this.offers;
   }
