@@ -2,7 +2,7 @@ import { createElement } from '../render.js';
 
 const createTripEventsTemplate = () => (
   `<ul class="trip-events__list">
-   </ul>`
+  </ul>`
 );
 
 export default class TripEventsView {
