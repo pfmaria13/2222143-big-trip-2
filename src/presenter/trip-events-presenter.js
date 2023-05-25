@@ -26,8 +26,7 @@ export default class TripEventsPresenter {
 
     if (this.#boardPoints.length === 0) {
       render(new NoPointView(), this.#tripContainer);
-    }
-    else {
+    } else {
       render(new SortingView(), this.#tripContainer);
       render(this.#pointsList, this.#tripContainer);
       for (const point of this.#boardPoints){
