@@ -1,4 +1,4 @@
-import { getRandomInteger, getRandomElement } from '../utils.js';
+import { getRandomInteger, getRandomElement } from '../utils/common.js';
 import dayjs from 'dayjs';
 
 const POINTS_COUNT = 20;
@@ -87,6 +87,7 @@ const generatePoint = (id) => {
     type: offersByTypePoint.type,
   };
 };
+
 
 const getPoints = () => Array.from({length: POINTS_COUNT}).map((value, index) => generatePoint (index + 1));
 
