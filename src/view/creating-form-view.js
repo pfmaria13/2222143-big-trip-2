@@ -182,4 +182,3 @@ export default class CreatingFormView {
     this.element = null;
   }
 }
-
