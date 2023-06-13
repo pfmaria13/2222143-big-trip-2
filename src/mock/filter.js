@@ -1,8 +1,9 @@
-import {filter} from '../utils/filter.js';
+import { filter } from '../utils/filter.js';
 
-export const generateFilter = (points) => Object.entries(filter).map(
-  ([filterName, filterPoints]) => ({
-    name: filterName,
-    count: filterPoints(points).length,
-  }),
-);
+const generateFilters = (tripEvents) => Object.entries(filter).map(
+  ([filterType, filterEvents]) => ({
+    type: filterType,
+    count: filterEvents(tripEvents).length,
+  }));
+
+export {generateFilters};
