@@ -1,25 +1,29 @@
+import TripInfoView from './view/trip-info-view.js';
+import FilterView from './view/filter-view.js';
+import TripEventsBoardPresenter from './presenter/trip-events-board-presenter.js';
+import TripEventsModel from './model/trip-events-model.js';
+import OfferByTypeModel from './model/offer-model.js';
+import TripEventDestinationModel from './model/trip-event-destination-model.js';
+import { generateFilters } from './mock/filter.js';
 import { render } from './framework/render.js';
-import FiltersView from './view/filters-view.js';
-import BoardPresenter from './presenter/board-presenter.js';
-import SiteMenuView from './view/site-menu-view.js';
-import PointsModel from './model/points-model.js';
-import { getPoints, getDestinations, getOffersByType } from './mock/point.js';
-import { generateFilter } from './mock/filter.js';
+import { RenderPosition } from './framework/render.js';
 
-const siteHeaderElement = document.querySelector('.trip-main');
-const siteMainElement = document.querySelector('.page-main');
+const EVENTS_COUNT = 20;
 
+const tripMainContainer = document.querySelector('.trip-main');
+const tripEventsComponent = document.querySelector('.trip-events');
 
-const points = getPoints();
-const offersByType = getOffersByType();
-const destinations = getDestinations();
+const offerByTypeModel = new OfferByTypeModel();
+const destinationModel = new TripEventDestinationModel(EVENTS_COUNT);
+const tripEventModel = new TripEventsModel(EVENTS_COUNT, [...offerByTypeModel.offersByType], destinationModel.destinations);
 
-const pointsModel = new PointsModel();
-pointsModel.init(points, destinations, offersByType);
-const boardPresenter = new BoardPresenter(siteMainElement.querySelector('.trip-events'), pointsModel);
-boardPresenter.init();
+const filters = generateFilters(tripEventModel.tripEvents);
 
-const filters = generateFilter(pointsModel.points);
+const tripEventsPresenter = new TripEventsBoardPresenter(tripEventsComponent, tripEventModel, offerByTypeModel);
 
-render(new FiltersView({filters}), siteHeaderElement.querySelector('.trip-controls__filters'));
-render(new SiteMenuView(), siteHeaderElement.querySelector('.trip-controls__navigation'));
+if(tripEventModel.tripEvents.length !== 0) {
+  render(new TripInfoView(tripEventModel.tripEvents), tripMainContainer, RenderPosition.AFTERBEGIN);
+}
+render(new FilterView(filters), tripMainContainer.querySelector('.trip-controls__filters'));
+
+tripEventsPresenter.init();

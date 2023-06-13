@@ -1,15 +1,16 @@
-import { isPointDateFuture, isPointDatePast, isPointDateFuturePast } from './point.js';
+import { isPast, isFuture } from './trip-event-date.js';
 
-const FilterType = {
+const FilterTypes = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
-  PAST: 'past'
+  PAST: 'past',
 };
+
 
 const filter = {
-  [FilterType.EVERYTHING]: (points) => points,
-  [FilterType.FUTURE]: (points) => points.filter((point) => isPointDateFuture(point.dateFrom) || isPointDateFuturePast(point.dateFrom, point.dateTo)),
-  [FilterType.PAST]: (points) => points.filter((point) => isPointDatePast(point.dateTo) || isPointDateFuturePast(point.dateFrom, point.dateTo)),
+  [FilterTypes.EVERYTHING]: (tripEvents) => tripEvents,
+  [FilterTypes.FUTURE]: (tripEvents) => tripEvents.filter((point) => isFuture(point.dateFrom, 'D') || isFuture(point.dateTo, 'D')),
+  [FilterTypes.PAST]: (tripEvents) => tripEvents.filter((point) => isPast(point.dateTo, 'D') || isPast(point.dateFrom, 'D')),
 };
 
-export { filter };
+export {filter, FilterTypes};
