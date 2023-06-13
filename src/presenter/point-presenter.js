@@ -1,5 +1,5 @@
 import { render, replace, remove } from '../framework/render.js';
-import PreviewPointView from '../view/preview-point-view.js';
+import PreviewPointView from '../view/point-preview-view.js';
 import PointView from '../view/point-view.js';
 import { UserAction, UpdateType } from '../const.js';
 
@@ -12,6 +12,7 @@ export default class PointPresenter {
   #pointListContainer = null;
   #previewPointComponent = null;
   #editingPointComponent = null;
+
   #destinationsModel = null;
   #offersModel = null;
 
@@ -38,12 +39,12 @@ export default class PointPresenter {
     this.#offers = [...this.#offersModel.offers];
 
     const prevPreviewPointComponent = this.#previewPointComponent;
-    const prevEditingPointComponent = this.#editingPointComponent;
+    const prevEditingPointComponent =  this.#editingPointComponent;
 
     this.#previewPointComponent = new PreviewPointView(point, this.#destinations, this.#offers);
     this.#editingPointComponent = new PointView({
       point: point,
-      destination: this.#destinations,
+      destinations: this.#destinations,
       offers: this.#offers,
       isNewPoint: false
     });

@@ -1,12 +1,12 @@
 import { render } from './framework/render.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import BoardPresenter from './presenter/board-presenter.js';
-import NewPointButtonPresenter from './presenter/new-point-button-presenter.js';
-import SiteMenuView from './view/site-menu-view.js';
-import PointsModel from './model/points-model.js';
-import FilterModel from './model/filter-model.js';
+import ButtonPointPresenter from './presenter/button-point-presenter.js';
+import SiteMenuView from './view/menu-site-view.js';
+import PointsModel from './model/point-model.js';
+import FilterModel from './model/filters-model.js';
 import DestinationsModel from './model/destinations-model.js';
-import OffersModel from './model/offers-model.js';
+import OffersModel from './model/offer-model.js';
 import PointsApiService from './api-service/points-api-service.js';
 import DestinationsApiService from './api-service/destinations-api-service.js';
 import OffersApiService from './api-service/offers-api-service.js';
@@ -23,6 +23,8 @@ const filterModel = new FilterModel();
 const filterPresenter = new FilterPresenter({
   filterContainer: siteHeaderElement.querySelector('.trip-controls__filters'),
   pointsModel: pointsModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
   filterModel: filterModel
 });
 filterPresenter.init();
@@ -37,19 +39,19 @@ const boardPresenter = new BoardPresenter({
 });
 boardPresenter.init();
 
-const newPointButtonPresenter = new NewPointButtonPresenter({
-  newPointButtonContainer: siteHeaderElement,
+const buttonPointPresenter = new ButtonPointPresenter({
+  buttonPointContainer: siteHeaderElement,
   destinationsModel: destinationsModel,
+  pointsModel: pointsModel,
   offersModel: offersModel,
   boardPresenter: boardPresenter
 });
-
-newPointButtonPresenter.init();
+buttonPointPresenter.init();
 
 offersModel.init().finally(() => {
   destinationsModel.init().finally(() => {
     pointsModel.init().finally(() => {
-      newPointButtonPresenter.renderNewPointButton();
+      buttonPointPresenter.renderButtonPoint();
     });
   });
 });
