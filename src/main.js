@@ -1,29 +1,44 @@
-import TripInfoView from './view/trip-info-view.js';
-import FilterView from './view/filter-view.js';
-import TripEventsBoardPresenter from './presenter/trip-events-board-presenter.js';
-import TripEventsModel from './model/trip-events-model.js';
-import OfferByTypeModel from './model/offer-model.js';
-import TripEventDestinationModel from './model/trip-event-destination-model.js';
-import { generateFilters } from './mock/filter.js';
 import { render } from './framework/render.js';
-import { RenderPosition } from './framework/render.js';
+import FilterPresenter from './presenter/filter-presenter.js';
+import BoardPresenter from './presenter/board-presenter.js';
+import SiteMenuView from './view/site-menu-view.js';
+import PointsModel from './model/points-model.js';
+import FilterModel from './model/filter-model.js';
+import NewPointButtonView from './view/new-point-button-view.js';
+import { getPoints, getDestinations, getOffersByType } from './mock/point.js';
 
-const EVENTS_COUNT = 20;
+const siteHeaderElement = document.querySelector('.trip-main');
+const siteMainElement = document.querySelector('.page-main');
 
-const tripMainContainer = document.querySelector('.trip-main');
-const tripEventsComponent = document.querySelector('.trip-events');
 
-const offerByTypeModel = new OfferByTypeModel();
-const destinationModel = new TripEventDestinationModel(EVENTS_COUNT);
-const tripEventModel = new TripEventsModel(EVENTS_COUNT, [...offerByTypeModel.offersByType], destinationModel.destinations);
+const points = getPoints();
+const offersByType = getOffersByType();
+const destinations = getDestinations();
 
-const filters = generateFilters(tripEventModel.tripEvents);
+const pointsModel = new PointsModel();
+pointsModel.init(points, destinations, offersByType);
 
-const tripEventsPresenter = new TripEventsBoardPresenter(tripEventsComponent, tripEventModel, offerByTypeModel);
+const filterModel = new FilterModel();
+const filterPresenter = new FilterPresenter(siteHeaderElement.querySelector('.trip-controls__filters'), filterModel, pointsModel);
+filterPresenter.init();
 
-if(tripEventModel.tripEvents.length !== 0) {
-  render(new TripInfoView(tripEventModel.tripEvents), tripMainContainer, RenderPosition.AFTERBEGIN);
-}
-render(new FilterView(filters), tripMainContainer.querySelector('.trip-controls__filters'));
+const boardPresenter = new BoardPresenter(siteMainElement.querySelector('.trip-events'), pointsModel, filterModel);
+boardPresenter.init();
 
-tripEventsPresenter.init();
+const newPointButtonComponent = new NewPointButtonView();
+
+const handleNewPointFormClose = () => {
+  newPointButtonComponent.element.disabled = false;
+};
+
+const handleNewPointButtonClick = () => {
+  boardPresenter.createPoint(handleNewPointFormClose);
+  newPointButtonComponent.element.disabled = true;
+};
+
+render(newPointButtonComponent, siteHeaderElement);
+newPointButtonComponent.setClickHandler(handleNewPointButtonClick);
+
+
+render(new SiteMenuView(), siteHeaderElement.querySelector('.trip-controls__navigation'));
+
