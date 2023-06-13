@@ -15,8 +15,7 @@ const transformTimeDifference = (difference) => {
 
   if(difference < MAX_MINUTES_IN_HOUR){
     format = 'mm[M]';
-  }
-  else if (difference / MAX_MINUTES_IN_HOUR < MAX_HOURS_IN_DAY) {
+  } else if (difference / MAX_MINUTES_IN_HOUR < MAX_HOURS_IN_DAY) {
     format = 'HH[H] mm[M]';
   }
   return humanizeEventTime(dayjs()
