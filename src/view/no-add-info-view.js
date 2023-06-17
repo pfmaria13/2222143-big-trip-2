@@ -1,12 +1,12 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-const createNoAddInfoTemplate = () => (
+const createNoAdditionalInfoTemplate = () => (
   `<p class="trip-events__msg">
   Sorry, there was an error loading the data
   </p>`);
 
-export default class NoAddInfoView extends AbstractView {
+export default class NoAdditionalInfoView extends AbstractView {
   get template() {
-    return createNoAddInfoTemplate();
+    return createNoAdditionalInfoTemplate();
   }
 }
