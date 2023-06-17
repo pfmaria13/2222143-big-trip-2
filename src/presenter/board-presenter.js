@@ -4,7 +4,7 @@ import PointsListView from '../view/list-points-view.js';
 import SortingView from '../view/sort-view.js';
 import NoPointView from '../view/no-point-view.js';
 import LoadingView from '../view/loading-view.js';
-import NoAdditionalInfoView from '../view/no-add-info-view.js';
+import NoAddInfoView from '../view/no-add-info-view.js';
 import PointPresenter from './point-presenter.js';
 import PointNewPresenter from './new-point-presenter.js';
 import { sorting } from '../utils/sort.js';
@@ -24,7 +24,7 @@ export default class BoardPresenter {
   #sortComponent = null;
   #pointListComponent = new PointsListView();
   #loadingComponent = new LoadingView();
-  #noAdditionalInfoComponent = new NoAdditionalInfoView();
+  #noAddInfoComponent = new NoAddInfoView();
 
   #pointPresenter = new Map();
   #pointNewPresenter = null;
@@ -112,8 +112,8 @@ export default class BoardPresenter {
     render(this.#loadingComponent, this.#tripContainer, RenderPosition.AFTERBEGIN);
   };
 
-  #renderNoAdditionalInfo = () => {
-    render(this.#noAdditionalInfoComponent, this.#tripContainer, RenderPosition.AFTERBEGIN);
+  #renderNoAddInfo = () => {
+    render(this.#noAddInfoComponent, this.#tripContainer, RenderPosition.AFTERBEGIN);
   };
 
   #renderNoPoints = () => {
@@ -156,7 +156,7 @@ export default class BoardPresenter {
     if (this.#offersModel.offers.length === 0 || this.#offersModel.isSuccessfulLoading === false ||
       this.#destinationsModel.destinations.length === 0 || this.#destinationsModel.isSuccessfulLoading === false ||
       this.#pointsModel.isSuccessfulLoading === false) {
-      this.#renderNoAdditionalInfo();
+      this.#renderNoAddInfo();
       return;
     }
 
